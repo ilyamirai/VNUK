@@ -48,7 +48,16 @@ pip install python-telegram-bot beautifulsoup4 requests selenium-wire
 pip install pyTelegramWalletApi
 ```
 
-3. Создайте файл `token.txt` с вашим Telegram Wallet API токеном
+3. Получите Telegram Wallet API токен:
+
+   **Вариант A (Автоматически):**
+   ```bash
+   python auto_token.py
+   ```
+   Скрипт будет автоматически обновлять токен каждые 5 минут. Запустите его в отдельном окне/процессе.
+
+   **Вариант B (Вручную):**
+   - Создайте файл `token.txt` с вашим Telegram Wallet API токеном
 
 4. (Опционально) Создайте `funpay_cookies.txt` с куками для авторизации на FunPay
 
@@ -56,8 +65,14 @@ pip install pyTelegramWalletApi
 
 ## Запуск
 
+**Основной бот:**
 ```bash
 python telegram_bot.py
+```
+
+**Автообновление токена (опционально, в отдельном окне):**
+```bash
+python auto_token.py
 ```
 
 ## Использование
@@ -100,10 +115,12 @@ USDT (СБП, Сбер): Mirai на #2 месте!
 
 ## Структура проекта
 
-- `telegram_bot.py` - Основной файл бота
-- `wallet.py` - Модуль для работы с Telegram Wallet API (из pyTelegramWalletApi)
-- `token.txt` - Токен Telegram Wallet API (не в репозитории)
-- `funpay_cookies.txt` - Куки FunPay (не в репозитории)
+- `telegram_bot.py` - Основной файл бота с мониторингом и уведомлениями
+- `auto_token.py` - Автоматическое получение и обновление P2P токена
+- `token.txt` - Токен Telegram Wallet API (не в репозитории, создается автоматически)
+- `funpay_cookies.txt` - Куки FunPay (не в репозитории, опционально)
+- `.gitignore` - Защита секретных данных от попадания в Git
+- `README.md` - Документация проекта
 
 ## Особенности реализации
 
