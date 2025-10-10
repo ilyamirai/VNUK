@@ -88,12 +88,12 @@ def get_default_filters():
 # Маппинг кодов банков в названия
 PAYMENT_METHOD_CODES = {
     'sbp': 'sbp',
-    'sberbank': 'sberbank'
+    'sberbankru': 'sberbankru'
 }
 
 PAYMENT_METHOD_NAMES = {
     'sbp': 'СБП',
-    'sberbank': 'Сбер'
+    'sberbankru': 'Сбер'
 }
 
 def get_main_keyboard():
@@ -648,7 +648,7 @@ async def monitor_usdt_dual_banks(context: ContextTypes.DEFAULT_TYPE, user_id: i
 
             # Проверяем оба банка
             banks_data = {}
-            for bank_code in ['sbp', 'sberbank']:
+            for bank_code in ['sbp', 'sberbankru']:
                 offers, market_rate = get_offers_for_bank(w, filters, bank_code)
                 if offers is not None:
                     position = find_mirai_position(offers)
@@ -1292,7 +1292,7 @@ async def start_monitor_usdt(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
         initial_response = "🔔 Мониторинг USDT запущен!\n\n💳 Отслеживаемые банки: СБП, Сбер\n\n"
 
-        for bank_code in ['sbp', 'sberbank']:
+        for bank_code in ['sbp', 'sberbankru']:
             bank_name = PAYMENT_METHOD_NAMES.get(bank_code, bank_code)
             offers, market_rate = get_offers_for_bank(w, saved_filters, bank_code)
 
@@ -1341,7 +1341,7 @@ async def start_monitor_usdt(update: Update, context: ContextTypes.DEFAULT_TYPE)
             'notified': False,
             'gap_notified': False
         },
-        'sberbank': {
+        'sberbankru': {
             'last_position': None,
             'notified': False,
             'gap_notified': False
