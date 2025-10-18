@@ -371,9 +371,12 @@ def get_buy_top1_rate():
         })
 
     except Exception as e:
+        import traceback
         return jsonify({
             'success': False,
-            'error': str(e)
+            'error': str(e),
+            'traceback': traceback.format_exc(),
+            'debug': 'buy-top1 endpoint'
         }), 500
 
 
