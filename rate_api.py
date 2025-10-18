@@ -353,8 +353,8 @@ def get_buy_top1_rate():
             offer_type='sell',
             limit=10,
             merchant_verified=True,
-            payment_method_codes=['sberbankru', 'sbp'],
-            desired_amount=55000
+            payment_method_codes=['sberbankru', 'sbp']
+            # desired_amount убран - фильтрация происходит на стороне клиента
         )
 
         if not offers:
