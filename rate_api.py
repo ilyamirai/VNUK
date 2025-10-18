@@ -12,7 +12,11 @@ app = Flask(__name__)
 
 def get_wallet_instance():
     """Получить экземпляр Wallet с токеном из файла"""
-    return Wallet.token_from_file('token.txt')
+    import os
+    # Используем абсолютный путь к token.txt в той же папке что и rate_api.py
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    token_path = os.path.join(script_dir, 'token.txt')
+    return Wallet.token_from_file(token_path)
 
 
 @app.route('/api/rate/usdt-rub', methods=['GET'])
