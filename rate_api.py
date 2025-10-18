@@ -384,6 +384,32 @@ def get_buy_top1_rate():
         }), 500
 
 
+@app.route('/test-market', methods=['GET'])
+def test_market():
+    """Test get_p2p_market без фильтров"""
+    try:
+        w = get_wallet_instance()
+        # Минимальный запрос без фильтров
+        offers = w.get_p2p_market(
+            base_currency_code='USDT',
+            quote_currency_code='RUB',
+            offer_type='sell',
+            limit=3
+        )
+        return jsonify({
+            'success': True,
+            'count': len(offers),
+            'first_price': float(offers[0]['price']) if offers else None
+        })
+    except Exception as e:
+        import traceback
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'traceback': traceback.format_exc()
+        }), 500
+
+
 @app.route('/health', methods=['GET'])
 def health():
     """Health check endpoint"""
