@@ -132,9 +132,9 @@ def get_p2p_market():
         # Парсим параметры
         base_currency = request.args.get('base_currency', 'USDT').upper()
         quote_currency = request.args.get('quote_currency', 'RUB').upper()
-        offer_type = request.args.get('offer_type', 'sell').lower()
+        offer_type = request.args.get('offer_type', 'PURCHASE').upper()  # PURCHASE или SALE
         limit = int(request.args.get('limit', 50))
-        merchant_verified = request.args.get('merchant_verified', 'true').lower() == 'true'
+        merchant_verified = request.args.get('merchant_verified', 'TRUSTED')  # TRUSTED, VERIFIED или пусто
         desired_amount = request.args.get('desired_amount', type=float)
         top1_only = request.args.get('top1', 'false').lower() == 'true'
 
@@ -346,11 +346,10 @@ def get_buy_top1_rate():
         offers = w.get_p2p_market(
             base_currency_code='USDT',
             quote_currency_code='RUB',
-            offer_type='sell',
-            limit=10,
-            merchant_verified=True,
+            offer_type='PURCHASE',
+            limit=50,
+            merchant_verified='TRUSTED',
             payment_method_codes=['sberbankru', 'sbp']
-            # desired_amount убран - фильтрация происходит на стороне клиента
         )
 
         if not offers:
@@ -385,12 +384,13 @@ def test_market():
     """Test get_p2p_market без фильтров"""
     try:
         w = get_wallet_instance()
-        # Минимальный запрос без фильтров
+        # Минимальный запрос без фильтров - ТОЧНО КАК В telegram_bot
         offers = w.get_p2p_market(
             base_currency_code='USDT',
             quote_currency_code='RUB',
-            offer_type='sell',
-            limit=3
+            offer_type='PURCHASE',  # ИСПРАВЛЕНО: было 'sell'
+            limit=50,
+            merchant_verified='TRUSTED'
         )
         return jsonify({
             'success': True,
